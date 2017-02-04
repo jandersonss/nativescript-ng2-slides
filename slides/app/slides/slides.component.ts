@@ -64,6 +64,7 @@ export class SlidesComponent implements OnInit {
 	@Input('pageHeight') pageHeight: number;
 	@Input('loop') loop: boolean;
 	@Input('pageIndicators') pageIndicators: boolean;
+	@Input('initialSlide') initialSlide: number;
 
 	private transitioning: boolean;
 	private direction: direction = direction.none;
@@ -84,6 +85,7 @@ export class SlidesComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		this.initialSlide = this.initialSlide ? Number(this.initialSlide) : 0;
 		this.loop = this.loop ? this.loop : false;
 		this.pageIndicators = this.pageIndicators ? this.pageIndicators : false;
 		this.pageWidth = this.pageWidth ? this.pageWidth : platform.screen.mainScreen.widthDIPs;
@@ -124,13 +126,7 @@ export class SlidesComponent implements OnInit {
 		footerSection.horizontalAlignment = 'center';
 
 		if (app.ios) {
-<<<<<<< HEAD
 			footerSection.clipToBounds = false;
-=======
-		    footerSection.clipToBounds = false;
-		} else if (app.android) {
-			footerSection.android.getParent().setClipChildren(false);
->>>>>>> origin/master
 		}
 
 		footerSection.orientation = 'horizontal';
@@ -374,7 +370,7 @@ export class SlidesComponent implements OnInit {
 			this._slideMap[0].left = this._slideMap[this._slideMap.length - 1];
 			this._slideMap[this._slideMap.length - 1].right = this._slideMap[0];
 		}
-		return this._slideMap[0];
+		return this._slideMap[this.initialSlide];
 	}
 
 	public nextSlide(): void {
